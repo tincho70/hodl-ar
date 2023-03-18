@@ -9,7 +9,7 @@ export default function handler(req: NextRequest, res: NextResponse) {
     });
   }
   const githubUser = (
-    referer.match(/^https\:\/\/github.com\/(\w+)/) as string[]
+    referer.match(/^https\:\/\/github.com\/([\w-]+)/) as string[]
   )[1];
 
   const destination = `https://${githubUser}.links.hodl.ar`;
