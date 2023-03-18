@@ -1,13 +1,30 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const referer = req.headers.referer;
-  const url = new URL(referer as string);
+export default function handler(req: NextRequest, res: NextResponse) {
+  const referer = req.headers.get("referer");
 
-  const githubUser = url.pathname.split("/", 2)[1];
+  if (!referer) {
+    return new NextResponse("No disponible para Brave", {
+      status: 400,
+    });
+  }
+  const githubUser = (
+    referer.match(/^https\:\/\/github.com\/(\w+)/) as string[]
+  )[1];
 
   const destination = `https://${githubUser}.links.hodl.ar`;
-  res.status(303).redirect(destination);
+  return new NextResponse(
+    JSON.stringify({
+      message: "Hello, world!",
+    }),
+    {
+      status: 303,
+      headers: {
+        Location: destination,
+        "Content-Type": "text/plain",
+      },
+    },
+  );
 }
 
 export const config = {
