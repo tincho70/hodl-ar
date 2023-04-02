@@ -12,7 +12,7 @@ export default function handler(req: NextRequest, res: NextResponse) {
     referer.match(/^https\:\/\/github.com\/([\w-]+)/) as string[]
   )[1];
 
-  const destination = `https://${githubUser}.links.hodl.ar`;
+  const destination = `https://${githubUser}.github.hodl.ar`;
   return new NextResponse(
     JSON.stringify({
       message: "Hello, world!",
