@@ -28,6 +28,7 @@
     "eslint-config-next": "13.1.1",
     "focus-trap-react": "^10.0.2",
     "framer-motion": "^8.4.2",
+    "lacrypta-links": "git+https://github.com/lacrypta/links.git#518ae0d12afd109f0a94f708099d135a36ee096b",
     "lucide-react": "0.105.0-alpha.4",
     "ms": "^2.1.3",
     "next": "13.1.1",
@@ -37,7 +38,9 @@
     "react-markdown": "^8.0.4",
     "react-wrap-balancer": "^0.3.0",
     "typescript": "4.9.4",
-    "use-debounce": "^9.0.3"
+    "use-debounce": "^9.0.3",
+    "yaml": "^2.2.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
