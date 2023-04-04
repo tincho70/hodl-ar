@@ -1,22 +1,29 @@
 datasource db {
-  provider = "mongodb"
-  url      = env("MONGODB_URI")
+  provider     = "mongodb"
+  url          = env("MONGODB_URI")
   relationMode = "prisma"
 }
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model User {
-  id            String    @id @map("_id")
-  name          String?
-  bio           String?
-  email         String?   @unique
-  github        String?   @unique
-  twitter       String?   @unique
-  nostr         String?   @unique
-  discord       String?   @unique
-  lnbitsAdmin   String?   @unique
-  lnurlP        String?
+  id      String  @id @map("_id")
+  name    String?
+  bio     String?
+  email   String? @unique
+  github  String? @unique
+  twitter String? @unique
+  nostr   String? @unique
+  discord String? @unique
+  lnbits  LNBits?
+}
+
+model LNBits {
+  id       String  @id @map("_id")
+  userId   String  @unique
+  adminKey String
+  user     User    @relation(fields: [userId], references: [id])
+  lnurlP   String?
 }
