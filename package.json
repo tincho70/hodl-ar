@@ -28,7 +28,7 @@
     "eslint-config-next": "13.1.1",
     "focus-trap-react": "^10.0.2",
     "framer-motion": "^8.4.2",
-    "lacrypta-links": "git+https://github.com/lacrypta/links.git#518ae0d12afd109f0a94f708099d135a36ee096b",
+    "lacrypta-links": "git+https://github.com/lacrypta/links.git#5a1520edb561116911c34fc1bb79b33ccd6217cb",
     "lucide-react": "0.105.0-alpha.4",
     "ms": "^2.1.3",
     "next": "13.1.1",
