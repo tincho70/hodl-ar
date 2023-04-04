@@ -1,16 +1,26 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ResponseDataType } from "types/request";
-import { User } from ".prisma/client";
+import { User, LNBits as LNBitsConfig } from ".prisma/client";
 import { Prisma } from "@prisma/client";
+
+const MAIN_DOMAIN = process.env.MAIN_DOMAIN || "hodl.ar";
+const LNBITS_ENDPOINT =
+  process.env.LNBITS_ENDPOINT || "https://legend.lnbits.com";
 
 import z from "zod";
 
+// Schema
 const createUserRequestSchema = z.object({
   github: z.string().min(2),
 });
 
-import { getConfigFromUserRepo, getUserProfile } from "@/lib/external/github";
+// External Libraries
+import GitHub from "@/lib/external/github";
+import LNBits from "@/lib/external/lnbits";
+
+// Create Prisma Client
+const prisma = new PrismaClient();
 
 // export the default function
 export default async function handler(
@@ -24,8 +34,6 @@ export default async function handler(
   }
 
   // Parse for correct Post body
-
-  console.dir(req.body);
   const result = createUserRequestSchema.safeParse(req.body);
 
   // Invalid Body Format
@@ -34,41 +42,60 @@ export default async function handler(
     return result;
   }
 
+  // Get body data
   const { github } = result.data;
 
   // Wrap any errors in a try/catch
   try {
-    const githubProfile = await getUserProfile(github);
-    const userConfig = await getConfigFromUserRepo(github);
+    const githubProfile = await GitHub.getUserProfile(github);
+    const userConfig = await GitHub.getConfigFromUserRepo(github);
 
-    const { name, bio, twitter_username } = githubProfile;
+    const { name, bio, twitter_username, email } = githubProfile;
 
-    if (!userConfig?.nostr?.handle) {
-      throw new Error("No nostr.handle provided");
+    if (!userConfig?.username) {
+      throw new Error("No username provided");
     }
 
-    // TODO: Need handle validation
-
+    // TODO: Need to handle validation
     const user: User = {
-      id: userConfig.nostr.handle,
+      id: userConfig.username,
       name,
       bio,
       twitter: twitter_username,
-      email: null,
+      email,
       github,
       nostr: userConfig.nostr?.npub || null,
       discord: null,
-      lnbitsAdmin: null,
-      lnurlP: null,
     };
 
-    console.info("console.dir(user);");
-    console.dir(user);
+    // Create User on Database
+    await createUser(user);
 
-    // const createdUser = await createUser(user);
+    // Create LnBits User
+    const lnbitsUser = await LNBits.createUser(user.id);
+    const link = await LNBits.createLNURLp(lnbitsUser);
+
+    // Add LnBits User to Database
+    await prisma?.lNBits.create({
+      data: {
+        id: lnbitsUser.id,
+        userId: user.id,
+        adminKey: lnbitsUser.wallets[0].inkey,
+        lnurlP: link.lnurl,
+      },
+    });
 
     // Success
-    res.status(200).json({ success: true, data: user });
+    res.status(200).json({
+      success: true,
+      data: {
+        username: user.id,
+        handle: `${user.id}@${MAIN_DOMAIN}`,
+        lnurlp: link.lnurl,
+        lnbitUser: lnbitsUser.id,
+        walletUrl: `${LNBITS_ENDPOINT}/wallet?usr=${lnbitsUser.id}`,
+      },
+    });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
     return;
@@ -76,8 +103,6 @@ export default async function handler(
 }
 
 const createUser = async (data: Prisma.UserCreateInput) => {
-  const prisma = new PrismaClient();
-
   const newUser = await prisma.user.create({
     data: data,
   });
