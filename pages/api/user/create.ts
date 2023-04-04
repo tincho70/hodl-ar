@@ -93,6 +93,7 @@ export default async function handler(
         handle: `${user.id}@${MAIN_DOMAIN}`,
         lnurlp: link.lnurl,
         lnbitUser: lnbitsUser.id,
+        endpoint: LNBITS_ENDPOINT,
         walletUrl: `${LNBITS_ENDPOINT}/wallet?usr=${lnbitsUser.id}`,
       },
     });
