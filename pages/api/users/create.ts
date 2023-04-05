@@ -58,8 +58,8 @@ export default async function handler(
 
     // TODO: Need to handle validation
     const user: User = {
-      id: Math.random().toString(36).substring(2, 15),
-      // id: userConfig.username,
+      // id: Math.random().toString(36).substring(2, 15),
+      id: userConfig.username,
       name,
       bio,
       twitter: twitter_username,
