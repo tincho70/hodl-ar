@@ -16,7 +16,7 @@ export default async function handler(
     return {
       id: user.id,
       name: user.name,
-      email: user.email,
+      github: user.github,
     };
   });
 
