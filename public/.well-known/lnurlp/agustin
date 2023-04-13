@@ -1,8 +1,8 @@
 {
-  tag: "payRequest",
-  callback: "https://39ad255340.d.voltageapp.io/lnurlp/api/v1/lnurl/cb/1",
-  minSendable: 1000,
-  maxSendable: 100000000000,
-  metadata: "[["text/plain", "HODL.ar"]]",
-  commentAllowed: 32
+  "tag": "payRequest",
+  "callback": "https://39ad255340.d.voltageapp.io/lnurlp/api/v1/lnurl/cb/1",
+  "minSendable": 1000,
+  "maxSendable": 100000000000,
+  "metadata": "[["text/plain", "HODL.ar"]]",
+  "commentAllowed": 32
 }
