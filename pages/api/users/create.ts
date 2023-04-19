@@ -67,26 +67,56 @@ export default async function handler(
       github,
       nostr: userConfig.nostr?.npub || null,
       discord: null,
+      lud06: null,
     };
 
     // Create User on Database
     await createUser(user);
 
+    console.info("** Created User");
+    console.dir(user);
+
     // Create LnBits User
     const lnbitsUser = await LNBits.createUser(user.id);
+
+    // Create Link
     const link = await LNBits.createLNURLp(lnbitsUser);
 
-    console.info("LISTO: createLNURLp");
+    console.info("LINK");
+    console.dir(link);
 
-    // Add LnBits User to Database
-    await prisma?.lNBits.create({
-      data: {
-        id: lnbitsUser.id,
-        userId: user.id,
-        adminKey: lnbitsUser.wallets[0].inkey,
-        lnurlP: link.lnurl,
-      },
-    });
+    await Promise.all([
+      // Add LnBits User to Database
+      await prisma.lNBits.create({
+        data: {
+          id: lnbitsUser.id,
+          userId: user.id,
+          adminKey: lnbitsUser.wallets[0].inkey,
+        },
+      }),
+      // Add LNURLp to database
+      await prisma.lNURL.create({
+        data: {
+          tag: "payRequest",
+          callback: `${LNBITS_ENDPOINT}/lnurlp/api/v1/lnurl/cb/${link.id}`,
+          minSendable: link.min * 1000,
+          maxSendable: link.max * 1000,
+          metadata: `[[\"text/plain\", \"${link.description}\"]]`,
+          commentAllowed: link.comment_chars,
+          id: link.id,
+          userId: user.id,
+        },
+      }),
+      // Set LNURLp to user
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          lud06: link.lnurl,
+        },
+      }),
+    ]);
 
     // Success
     res.status(200).json({

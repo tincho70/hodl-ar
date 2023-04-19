@@ -17,13 +17,27 @@ model User {
   twitter String? @unique
   nostr   String? @unique
   discord String? @unique
+  lud06   String?
+  lud16   LNURL?
   lnbits  LNBits?
 }
 
 model LNBits {
-  id       String  @id @map("_id")
-  userId   String  @unique
+  id       String @id @map("_id")
+  userId   String @unique
+  user     User   @relation(fields: [userId], references: [id])
   adminKey String
-  user     User    @relation(fields: [userId], references: [id])
-  lnurlP   String?
+}
+
+model LNURL {
+  id             Int     @id @map("_id")
+  user           User    @relation(fields: [userId], references: [id])
+  userId         String  @unique
+  tag            String
+  callback       String?
+  minSendable    Int
+  maxSendable    Int
+  metadata       String
+  commentAllowed Int
+  payerData      Json?
 }
