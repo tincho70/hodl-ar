@@ -21,5 +21,15 @@
     "ceciliaolive": "eb172b63125ae927454d2ca407607487894445e82ca54abdbb7a2387fdd2e886",
     "tincho": "0adcc7ecbc22c56146d45e6242c8b6ae9341d6f55c2886dde0124273826a5a21",
     "negr0": "20d29810d6a5f92b045ade02ebbadc9036d741cc686b00415c42b4236fe4ad2f"
+  },
+  "relays": {
+    "2ad91f1dca2dcd5fc89e7208d1e5059f0bac0870d63fc3bac21c7a9388fa18fd": [
+      "wss://brb.io",
+      "wss://nos.lol",
+      "wss://nostr-pub.wellorder.net",
+      "wss://relay.snort.social",
+      "wss://relay.damus.io",
+      "wss://nostr.lacrypta.com.ar"
+    ]
   }
 }
