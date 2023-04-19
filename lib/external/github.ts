@@ -6,6 +6,10 @@ const MAIN_DOMAIN = process.env.MAIN_DOMAIN || "hodl.ar";
 const GitHub = {
   getUserProfile: async (username: string) => {
     const res = await fetch(`https://api.github.com/users/${username}`);
+
+    if (res.status !== 200) {
+      throw new Error("Github user not found");
+    }
     const data = await res.json();
 
     return data;
@@ -15,6 +19,10 @@ const GitHub = {
     const res = await fetch(
       `https://raw.githubusercontent.com/${username}/.${MAIN_DOMAIN}/main/config.yml`,
     );
+
+    if (res.status !== 200) {
+      throw new Error("Repository not found");
+    }
 
     const data = await res.text();
 
