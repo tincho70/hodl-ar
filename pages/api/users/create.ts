@@ -68,6 +68,7 @@ export default async function handler(
       nostr: userConfig.nostr?.npub || null,
       discord: null,
       lud06: null,
+      relayIDs: [],
     };
 
     // Create User on Database
