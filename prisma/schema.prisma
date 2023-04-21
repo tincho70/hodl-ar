@@ -9,24 +9,27 @@ generator client {
 }
 
 model User {
-  id      String  @id @map("_id")
-  name    String?
-  bio     String?
-  email   String? @unique
-  github  String? @unique
-  twitter String? @unique
-  nostr   String? @unique
-  discord String? @unique
-  lud06   String?
-  lud16   LNURL?
-  lnbits  LNBits?
+  id       String   @id @map("_id")
+  name     String?
+  bio      String?
+  email    String?  @unique
+  github   String?  @unique
+  twitter  String?  @unique
+  nostr    String?  @unique
+  discord  String?  @unique
+  lud06    String?
+  lud16    LNURL?
+  lnbits   LNBits?
+  relayIDs String[] @db.ObjectId
+  relays   Relay[]  @relation(fields: [relayIDs], references: [id])
 }
 
 model LNBits {
-  id       String @id @map("_id")
-  userId   String @unique
-  user     User   @relation(fields: [userId], references: [id])
-  adminKey String
+  id        String  @id @map("_id")
+  userId    String  @unique
+  user      User    @relation(fields: [userId], references: [id])
+  lndhubUrl String?
+  adminKey  String
 }
 
 model LNURL {
@@ -40,4 +43,11 @@ model LNURL {
   metadata       String
   commentAllowed Int
   payerData      Json?
+}
+
+model Relay {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String   @unique
+  userIDs String[]
+  users   User[]   @relation(fields: [userIDs], references: [id])
 }
