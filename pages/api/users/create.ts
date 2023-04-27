@@ -12,12 +12,14 @@ import z from "zod";
 
 // Schema
 const createUserRequestSchema = z.object({
-  github: z.string().min(2),
+  username: z.string().min(2),
+  provider: z.string(),
 });
 
 // External Libraries
 import GitHub from "@/lib/external/github";
 import LNBits from "@/lib/external/lnbits";
+import NextCors from "nextjs-cors";
 
 // Create Prisma Client
 const prisma = new PrismaClient();
@@ -27,6 +29,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseDataType>,
 ) {
+  // CORS
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
+
   // Only allow POST
   if (req.method !== "POST") {
     res.status(405).json({ success: false, message: "Must be POST" });
@@ -43,10 +53,17 @@ export default async function handler(
   }
 
   // Get body data
-  const { github } = result.data;
+  const { username, provider } = result.data;
+
+  // TODO
+  const github = username;
 
   // Wrap any errors in a try/catch
   try {
+    if (provider !== "github") {
+      throw new Error("Only GitHub is supported");
+    }
+
     const githubProfile = await GitHub.getUserProfile(github);
     const userConfig = await GitHub.getConfigFromUserRepo(github);
 
@@ -58,8 +75,8 @@ export default async function handler(
 
     // TODO: Need to handle validation
     const user: User = {
-      // id: Math.random().toString(36).substring(2, 15),
-      id: userConfig.username,
+      id: Math.random().toString(36).substring(2, 15),
+      // id: userConfig.username,
       name,
       bio,
       twitter: twitter_username,

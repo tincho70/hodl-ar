@@ -20,6 +20,10 @@ const GitHub = {
       `https://raw.githubusercontent.com/${username}/.${MAIN_DOMAIN}/main/config.yml`,
     );
 
+    console.info(
+      `https://raw.githubusercontent.com/${username}/.${MAIN_DOMAIN}/main/config.yml`,
+    );
+
     if (res.status !== 200) {
       throw new Error("Repository not found");
     }
