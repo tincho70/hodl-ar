@@ -9,21 +9,20 @@ generator client {
 }
 
 model User {
-  id        String   @id @map("_id")
-  name      String?
-  bio       String?
-  email     String?  @unique
-  github    String?  @unique
-  twitter   String?  @unique
-  nostr     String?  @unique
-  discord   String?  @unique
-  lud06     String?
-  lud16     LNURL?
-  lnbits    LNBits?
-  relayIDs  String[] @db.ObjectId
-  relays    Relay[]  @relation(fields: [relayIDs], references: [id])
-  otTokenId String?  @db.ObjectId
-  otToken   OTToken?
+  id       String   @id @map("_id")
+  name     String?
+  bio      String?
+  email    String?  @unique
+  github   String?  @unique
+  twitter  String?  @unique
+  nostr    String?  @unique
+  discord  String?  @unique
+  lud06    String?
+  lud16    LNURL?
+  lnbits   LNBits?
+  relayIDs String[] @db.ObjectId
+  relays   Relay[]  @relation(fields: [relayIDs], references: [id])
+  otToken  OTToken?
 }
 
 model LNBits {

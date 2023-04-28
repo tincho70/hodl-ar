@@ -59,7 +59,7 @@ export default async function handler(
     }
 
     // Create LnBits User
-    const lnbitsUser = await LNBits.createUser(user.id);
+    const lnbitsUser = await LNBits.createUser("user.id");
 
     // Create Link
     const link = await LNBits.createLNURLp(lnbitsUser);
@@ -72,7 +72,7 @@ export default async function handler(
       await prisma.lNBits.create({
         data: {
           id: lnbitsUser.id,
-          userId: user.id,
+          userId: "user.id",
           adminKey: lnbitsUser.wallets[0].inkey,
         },
       }),
@@ -86,13 +86,13 @@ export default async function handler(
           metadata: `[[\"text/plain\", \"${link.description}\"]]`,
           commentAllowed: link.comment_chars,
           id: link.id,
-          userId: user.id,
+          userId: "user.id",
         },
       }),
       // Set LNURLp to user
       await prisma.user.update({
         where: {
-          id: user.id,
+          id: "user.id",
         },
         data: {
           lud06: link.lnurl,
@@ -104,8 +104,8 @@ export default async function handler(
     res.status(200).json({
       success: true,
       data: {
-        username: user.id,
-        handle: `${user.id}@${MAIN_DOMAIN}`,
+        username: "user.id",
+        handle: `${"user.id"}@${MAIN_DOMAIN}`,
         lnAddress: link.lnurl,
         lnbitUser: lnbitsUser.id,
         endpoint: LNBITS_ENDPOINT,
