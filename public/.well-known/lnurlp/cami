@@ -1,8 +1,8 @@
 {
   "tag": "payRequest",
-  "callback": "https://39ad255340.d.voltageapp.io/lnurlp/api/v1/lnurl/cb/2",
+  "callback": "https://39ad255340.d.voltageapp.io/lnurlp/api/v1/lnurl/cb/65",
   "minSendable": 1000,
   "maxSendable": 100000000000,
-  "metadata": "[[\"text/plain\", \"tips de iris\"]]",
+  "metadata": "[[\"text/plain\", \"Camisi\"]]",
   "commentAllowed": 32
 }
