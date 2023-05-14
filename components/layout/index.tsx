@@ -30,7 +30,7 @@ export default function Layout({
       <SignInModal />
       <div className="fixed h-screen w-full bg-gradient-to-br from-[#eaeae8] via-white to-[#eaeae8]" />
       <div
-        className={`fixed top-0 w-full ${
+        className={`fixed top-0 hidden w-full ${
           scrolled
             ? "border-b border-gray-200 bg-white/50 backdrop-blur-xl"
             : "bg-white/0"
@@ -67,7 +67,7 @@ export default function Layout({
       <main className="flex w-full flex-col items-center justify-center py-32">
         {children}
       </main>
-      <div className="absolute w-full border-t border-gray-200 bg-white py-5 text-center">
+      <div className="absolute bottom-0 w-full border-t border-gray-200 bg-white py-5 text-center">
         <p className="text-gray-500">
           Powered by{" "}
           <a
