@@ -33,22 +33,22 @@ export default function Home() {
             <Image
               alt="HODL.ar logo"
               src="/hodl-logo.png"
-              width={500}
-              height={200}
+              width={400}
+              height={150}
             />
           </Balancer>
         </motion.h1>
-        <motion.p
-          className="mt-6 text-center text-gray-500 md:text-xl"
-          variants={FADE_DOWN_ANIMATION_VARIANTS}
+        <p
+          className="mt-6 text-center text-gray-500"
+          // variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
           <Balancer>El subdominio del bitcoiner argentino.</Balancer>
-        </motion.p>
+        </p>
       </motion.div>
 
       {/* here we are animating with Tailwind instead of Framer Motion because Framer Motion messes up the z-index for child components */}
 
-      <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
+      <div className="my-10 grid hidden w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
         <Card
           key={"Registrá tu subdominio"}
           title={"Registrá tu subdominio"}
