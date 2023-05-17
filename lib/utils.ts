@@ -61,3 +61,9 @@ export const truncate = (str: string, length: number) => {
   if (!str || str.length <= length) return str;
   return `${str.slice(0, length)}...`;
 };
+
+export const generateLNURLpAddress = (address: string) => {
+  const [username, domain] = address.split("@");
+
+  return `https://${domain}/.well-known/lnurlp/${username}`;
+};
