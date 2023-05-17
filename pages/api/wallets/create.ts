@@ -1,6 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ResponseDataType } from "types/request";
+import OTToken from "@/lib/models/otToken";
+import prisma from "@/lib/prisma";
 
 const MAIN_DOMAIN = process.env.MAIN_DOMAIN || "hodl.ar";
 const LNBITS_ENDPOINT =
@@ -9,17 +10,14 @@ const LNBITS_ENDPOINT =
 import z from "zod";
 
 // Schema
-const createUserRequestSchema = z.object({
+const createWalletRequestSchema = z.object({
   username: z.string().min(2),
-  provider: z.string(),
+  otToken: z.string(),
 });
 
 // External Libraries
 import LNBits from "@/lib/external/lnbits";
 import NextCors from "nextjs-cors";
-
-// Create Prisma Client
-const prisma = new PrismaClient();
 
 // export the default function
 export default async function handler(
@@ -41,7 +39,7 @@ export default async function handler(
   }
 
   // Parse for correct Post body
-  const result = createUserRequestSchema.safeParse(req.body);
+  const result = createWalletRequestSchema.safeParse(req.body);
 
   // Invalid Body Format
   if (!result.success) {
@@ -50,7 +48,9 @@ export default async function handler(
   }
 
   // Get body data
-  const { username, provider } = result.data;
+  const { username, otToken } = result.data;
+
+  const provider = "github";
 
   // Wrap any errors in a try/catch
   try {
@@ -58,8 +58,19 @@ export default async function handler(
       throw new Error("Only GitHub is supported");
     }
 
+    // Get User
+
+    // Validate token
+    const tokenFoundId = await OTToken.get(otToken);
+    if (!tokenFoundId) {
+      throw new Error("Token not found");
+    }
+
+    // Burn token
+    await OTToken.burn(tokenFoundId);
+
     // Create LnBits User
-    const lnbitsUser = await LNBits.createUser("user.id");
+    const lnbitsUser = await LNBits.createUser(username);
 
     // Create Link
     const link = await LNBits.createLNURLp(lnbitsUser);
@@ -67,12 +78,13 @@ export default async function handler(
     console.info("LINK");
     console.dir(link);
 
+    console.info("USERNAME:", username);
     await Promise.all([
       // Add LnBits User to Database
       await prisma.lNBits.create({
         data: {
           id: lnbitsUser.id,
-          userId: "user.id",
+          userId: username,
           adminKey: lnbitsUser.wallets[0].inkey,
         },
       }),
@@ -86,13 +98,13 @@ export default async function handler(
           metadata: `[[\"text/plain\", \"${link.description}\"]]`,
           commentAllowed: link.comment_chars,
           id: link.id,
-          userId: "user.id",
+          userId: username,
         },
       }),
       // Set LNURLp to user
       await prisma.user.update({
         where: {
-          id: "user.id",
+          id: username,
         },
         data: {
           lud06: link.lnurl,
@@ -100,12 +112,15 @@ export default async function handler(
       }),
     ]);
 
+    // Create OTToken for NOSTR
+    const token = await OTToken.create(username, 1440);
+
     // Success
     res.status(200).json({
       success: true,
       data: {
-        username: "user.id",
-        handle: `${"user.id"}@${MAIN_DOMAIN}`,
+        username: username,
+        handle: `${username}@${MAIN_DOMAIN}`,
         lnAddress: link.lnurl,
         lnbitUser: lnbitsUser.id,
         endpoint: LNBITS_ENDPOINT,
@@ -115,6 +130,7 @@ export default async function handler(
           password: lnbitsUser.wallets[0].inkey,
           url: `${LNBITS_ENDPOINT}/lndhub/ext`,
         },
+        nextOtToken: token.id,
       },
     });
   } catch (e: any) {

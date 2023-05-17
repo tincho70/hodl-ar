@@ -1,13 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ResponseDataType } from "types/request";
 import { User, LNBits as LNBitsConfig } from ".prisma/client";
-import { Prisma } from "@prisma/client";
-
-const MAIN_DOMAIN = process.env.MAIN_DOMAIN || "hodl.ar";
-const LNBITS_ENDPOINT =
-  process.env.LNBITS_ENDPOINT || "https://legend.lnbits.com";
-
+import prisma from "@/lib/prisma";
 import z from "zod";
 
 // Schema
@@ -18,11 +13,7 @@ const createUserRequestSchema = z.object({
 
 // External Libraries
 import GitHub from "@/lib/external/github";
-import LNBits from "@/lib/external/lnbits";
 import NextCors from "nextjs-cors";
-
-// Create Prisma Client
-const prisma = new PrismaClient();
 
 // export the default function
 export default async function handler(
@@ -75,8 +66,8 @@ export default async function handler(
 
     // TODO: Need to handle validation
     const user: User = {
-      id: Math.random().toString(36).substring(2, 15),
-      // id: userConfig.username,
+      // id: Math.random().toString(36).substring(2, 15),
+      id: userConfig.username,
       name,
       bio,
       twitter: twitter_username,
@@ -89,7 +80,7 @@ export default async function handler(
     };
 
     // Create User on Database
-    await createUser(user);
+    const { otToken } = await createUser(user);
 
     console.info("** Created User");
     console.dir(user);
@@ -97,10 +88,9 @@ export default async function handler(
     // Success
     res.status(200).json({
       success: true,
-      data: user,
+      data: { ...user, nextOtToken: otToken?.id },
     });
   } catch (e: any) {
-    console.dir(e);
     res.status(500).json({ success: false, message: e.message });
     return;
   }
@@ -108,7 +98,7 @@ export default async function handler(
 
 const createUser = async (data: Prisma.UserCreateInput) => {
   const currentDate = new Date();
-  const validUntil = new Date(currentDate.getTime() + 15 * 60 * 1000);
+  const validUntil = new Date(currentDate.getTime() + 86400 * 1000); // 24 hours
 
   const newUser = await prisma.user.create({
     data: {
@@ -118,6 +108,9 @@ const createUser = async (data: Prisma.UserCreateInput) => {
           validUntil,
         },
       },
+    },
+    include: {
+      otToken: true,
     },
   });
 
