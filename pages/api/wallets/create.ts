@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ResponseDataType } from "types/request";
-import OTToken from "@/lib/models/otToken";
+import OTToken from "@/lib/models/OTToken";
 import prisma from "@/lib/prisma";
 
 const MAIN_DOMAIN = process.env.MAIN_DOMAIN || "hodl.ar";
