@@ -34,7 +34,7 @@ model LNBits {
 }
 
 model LNURL {
-  id             Int     @id @map("_id")
+  id             String     @id @map("_id")
   user           User    @relation(fields: [userId], references: [id])
   userId         String  @unique
   tag            String
