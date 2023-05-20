@@ -133,7 +133,7 @@ export default async function handler(
         //   lndhub: {
         //     login: "admin",
         //     password: lnbitsUser.wallets[0].inkey,
-        //     url: `${LNBITS_ENDPOINT}/lndhub/ext`,
+        //     url: `${LNBITS_ENDPOINT}/lndhub/ext/`,
         //   },
         //   nextOtToken: token.id,
         // },
