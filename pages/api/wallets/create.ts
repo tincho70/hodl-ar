@@ -17,6 +17,7 @@ const createWalletRequestSchema = z.object({
 // External Libraries
 import LNBits from "@/lib/external/lnbits";
 import NextCors from "nextjs-cors";
+import { createMockWallet } from "@/lib/mock";
 
 // export the default function
 export default async function handler(
@@ -115,24 +116,28 @@ export default async function handler(
     // Create OTToken for NOSTR
     const token = await OTToken.create(username, 1440);
 
-    // Success
-    res.status(200).json({
-      success: true,
-      data: {
-        username: username,
-        handle: `${username}@${MAIN_DOMAIN}`,
-        lnAddress: link.lnurl,
-        lnbitUser: lnbitsUser.id,
-        endpoint: LNBITS_ENDPOINT,
-        walletUrl: `${LNBITS_ENDPOINT}/wallet?usr=${lnbitsUser.id}`,
-        lndhub: {
-          login: "admin",
-          password: lnbitsUser.wallets[0].inkey,
-          url: `${LNBITS_ENDPOINT}/lndhub/ext`,
-        },
-        nextOtToken: token.id,
-      },
-    });
+    // TODO: Replace this
+    const mockData: any = createMockWallet();
+    (mockData.nextOtToken = token.id),
+      // Success
+      res.status(200).json({
+        success: true,
+        data: mockData,
+        // data: {
+        //   username: username,
+        //   handle: `${username}@${MAIN_DOMAIN}`,
+        //   lnAddress: link.lnurl,
+        //   lnbitUser: lnbitsUser.id,
+        //   endpoint: LNBITS_ENDPOINT,
+        //   walletUrl: `${LNBITS_ENDPOINT}/wallet?usr=${lnbitsUser.id}`,
+        //   lndhub: {
+        //     login: "admin",
+        //     password: lnbitsUser.wallets[0].inkey,
+        //     url: `${LNBITS_ENDPOINT}/lndhub/ext`,
+        //   },
+        //   nextOtToken: token.id,
+        // },
+      });
   } catch (e: any) {
     console.dir(e);
     res.status(500).json({ success: false, message: e.message });
