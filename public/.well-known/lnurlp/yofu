@@ -1,8 +1,8 @@
 {
   "tag": "payRequest",
-  "callback": "https://39ad255340.d.voltageapp.io/lnurlp/api/v1/lnurl/cb/P2e8gq",
+  "callback": "https://legend.lnbits.com/lnurlp/api/v1/lnurl/cb/bzBPHF",
   "minSendable": 1000,
   "maxSendable": 100000000000,
-  "metadata": "[[\"text/plain\", \"yofu@hodl.ar\"]]",
+  "metadata": "[[\"text/plain\", \"Yofu\"]]",
   "commentAllowed": 32
 }

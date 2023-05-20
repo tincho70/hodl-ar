@@ -3,15 +3,15 @@ export const createMockWallet = () => {
     username: "yofu",
     handle: "yofu@hodl.ar",
     lnAddress:
-      "LNURL1DP68GURN8GHJ7VEEV9JRYDF4XV6RQTNY9EMX7MR5V9NK2CTSWQHXJME0D3H82UNVWQH4QVN98PNHZDL36S8",
+      "LNURL1DP68GURN8GHJ7MR9VAJKUEPWD3HXY6T5WVHXXMMD9AKXUATJD3CZ7CN6GFGYS3S5GNSTF",
     lnbitUser: "e8d970e449ea4e23b8db8ac22d9a8c87",
-    endpoint: "https://39ad255340.d.voltageapp.io",
+    endpoint: "https://legend.lnbits.com",
     walletUrl:
-      "https://39ad255340.d.voltageapp.io/wallet?usr=e8d970e449ea4e23b8db8ac22d9a8c87",
+      "https://legend.lnbits.com/wallet?usr=153433d604ac4545b57a1a261999383e",
     lndhub: {
       login: "admin",
-      password: "ad8ec9361a7c4ad2b533a617fba500ee",
-      url: "https://39ad255340.d.voltageapp.io/lndhub/ext",
+      password: "ca64ecfc1a614c7887726461a326cd41",
+      url: "https://legend.lnbits.com/lndhub/ext",
     },
   };
 };
