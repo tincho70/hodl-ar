@@ -33,7 +33,7 @@ export const OTToken = {
       data: {
         id: generateString(20),
         validUntil,
-        userId: userId,
+        userId,
       },
     });
   },

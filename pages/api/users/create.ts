@@ -14,6 +14,7 @@ const createUserRequestSchema = z.object({
 // External Libraries
 import GitHub from "@/lib/external/github";
 import NextCors from "nextjs-cors";
+import { generateString } from "@/lib/utils";
 
 // export the default function
 export default async function handler(
@@ -105,6 +106,7 @@ const createUser = async (data: Prisma.UserCreateInput) => {
       ...data,
       otToken: {
         create: {
+          id: generateString(20),
           validUntil,
         },
       },

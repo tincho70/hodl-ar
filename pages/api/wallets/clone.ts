@@ -74,7 +74,7 @@ export default async function handler(
         maxSendable: max,
         metadata: metadata,
         commentAllowed: comment_chars,
-        id: 0,
+        id: "0",
         userId: username,
         payerData,
       },
