@@ -11,7 +11,6 @@ import z from "zod";
 
 // Schema
 const createWalletRequestSchema = z.object({
-  username: z.string().min(2),
   otToken: z.string(),
 });
 
@@ -48,7 +47,7 @@ export default async function handler(
   }
 
   // Get body data
-  const { username, otToken } = result.data;
+  const { otToken } = result.data;
 
   const provider = "github";
 
@@ -61,13 +60,14 @@ export default async function handler(
     // Get User
 
     // Validate token
-    const tokenFoundId = await OTToken.get(otToken);
-    if (!tokenFoundId) {
+    const username = await OTToken.get(otToken);
+    if (!username) {
       throw new Error("Token not found");
     }
 
     // Burn token
-    await OTToken.burn(tokenFoundId);
+    // TODO: remove comment
+    // await OTToken.burn(otToken);
 
     // Create LnBits User
     const lnbitsUser = await LNBits.createUser(username);

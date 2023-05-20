@@ -13,6 +13,7 @@ export default async function handler(
       id: user.id,
       name: user.name,
       github: user.github,
+      npub: user.npub,
     };
   });
 

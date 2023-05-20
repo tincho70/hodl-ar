@@ -73,7 +73,7 @@ export default async function handler(
       twitter: twitter_username,
       email,
       github,
-      nostr: userConfig.nostr?.npub || null,
+      npub: userConfig.nostr?.npub || null,
       discord: null,
       lud06: null,
       relayIDs: [],

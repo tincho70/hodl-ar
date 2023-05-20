@@ -1,9 +1,9 @@
 import prisma from "../prisma";
+import { generateString } from "../utils";
 
 export const OTToken = {
   get: async (oTTokenId: string) => {
     const currentDate = new Date();
-
     const otToken = await prisma.oTToken.findFirst({
       where: {
         id: oTTokenId,
@@ -13,7 +13,7 @@ export const OTToken = {
       },
     });
 
-    return otToken?.id;
+    return otToken?.userId;
   },
 
   burn: async (oTTokenId: string) => {
@@ -31,6 +31,7 @@ export const OTToken = {
     const validUntil = new Date(currentDate.getTime() + minutes * 60 * 1000); // 24 hours
     return await prisma.oTToken.create({
       data: {
+        id: generateString(20),
         validUntil,
         userId: userId,
       },
