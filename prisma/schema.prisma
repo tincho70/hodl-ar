@@ -15,7 +15,7 @@ model User {
   email    String?  @unique
   github   String?  @unique
   twitter  String?  @unique
-  nostr    String?  @unique
+  npub    String?  @unique
   discord  String?  @unique
   lud06    String?
   lud16    LNURL?
@@ -54,7 +54,7 @@ model Relay {
 }
 
 model OTToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @map("_id")
   validUntil DateTime
   userId     String   @unique
   user       User     @relation(fields: [userId], references: [id])

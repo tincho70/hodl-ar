@@ -17,7 +17,7 @@ export interface LNBitsWallet {
 }
 
 export interface LNBitsLink {
-  id: number;
+  id: string;
   wallet: string;
   description: string;
   min: number;

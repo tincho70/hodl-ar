@@ -3,22 +3,16 @@ import { ResponseDataType } from "types/request";
 import OTToken from "@/lib/models/OTToken";
 import prisma from "@/lib/prisma";
 
-const MAIN_DOMAIN = process.env.MAIN_DOMAIN || "hodl.ar";
-const LNBITS_ENDPOINT =
-  process.env.LNBITS_ENDPOINT || "https://legend.lnbits.com";
-
 import z from "zod";
 
 // Schema
-const cloneWalletRequestSchema = z.object({
-  username: z.string().min(2),
-  address: z.string().min(2),
+const setupNostrRequestSchema = z.object({
+  npub: z.string().min(2),
   otToken: z.string(),
 });
 
 // External Libraries
 import NextCors from "nextjs-cors";
-import { generateLNURLpAddress } from "@/lib/utils";
 
 // export the default function
 export default async function handler(
@@ -40,7 +34,7 @@ export default async function handler(
   }
 
   // Parse for correct Post body
-  const result = cloneWalletRequestSchema.safeParse(req.body);
+  const result = setupNostrRequestSchema.safeParse(req.body);
 
   // Invalid Body Format
   if (!result.success) {
@@ -49,44 +43,36 @@ export default async function handler(
   }
 
   // Get body data
-  const { username, address, otToken } = result.data;
+  const { npub, otToken } = result.data;
 
   // Wrap any errors in a try/catch
   try {
     // Validate token
-    const userFoundId = await OTToken.get(otToken);
-    if (!userFoundId) {
+    const username = await OTToken.get(otToken);
+    if (!username) {
       throw new Error("Token not found");
     }
 
     // Burn token
     // TODO: remove comment
-    await OTToken.burn(otToken);
+    // await OTToken.burn(otToken);
 
-    const { callback, min, max, metadata, comment_chars, payerData } =
-      await getLNURLp(address);
-    // Add LNURLp to database
-    await prisma.lNURL.create({
+    console.info("LINK");
+
+    console.info("USERNAME:", username);
+    // Set LNURLp to user
+    await prisma.user.update({
+      where: {
+        id: username,
+      },
       data: {
-        tag: "payRequest",
-        callback,
-        minSendable: min,
-        maxSendable: max,
-        metadata: metadata,
-        commentAllowed: comment_chars,
-        id: "0",
-        userId: username,
-        payerData,
+        npub,
       },
     });
 
     // Success
     res.status(200).json({
       success: true,
-      data: {
-        username: username,
-        handle: `${username}@${MAIN_DOMAIN}`,
-      },
     });
   } catch (e: any) {
     console.dir(e);
@@ -94,15 +80,3 @@ export default async function handler(
     return;
   }
 }
-
-const getLNURLp = async (address: string) => {
-  const url = generateLNURLpAddress(address);
-  const res = await fetch(url);
-
-  if (res.status !== 200) {
-    throw new Error("Github user not found");
-  }
-  const data = await res.json();
-
-  return data;
-};
