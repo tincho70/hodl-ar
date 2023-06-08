@@ -1,0 +1,8 @@
+{
+  "tag": "payRequest",
+  "callback": "https://39ad255340.d.voltageapp.io/lnurlp/api/v1/lnurl/cb/H2DA3D",
+  "minSendable": 1000,
+  "maxSendable": 100000000,
+  "metadata": "[[\"text/plain\", \"Para Hodl.ar\"]]",
+  "commentAllowed": 32
+}
