@@ -2,8 +2,8 @@
   "status":"OK",
   "tag":"payRequest",
   "commentAllowed":255,
-  "callback":"https://getalby.com/lnurlp/juan/callback",
-  "metadata":"[[\"text/identifier\",\"juan@getalby.com\"],[\"text/plain\",\"Sats for juan\"]]",
+  "callback":"https://getalby.com/lnurlp/juanjose/callback",
+  "metadata":"[[\"text/identifier\",\"juanjose@getalby.com\"],[\"text/plain\",\"Sats for juanjose\"]]",
   "minSendable":1000,
   "maxSendable":11000000000,
   "payerData":{
