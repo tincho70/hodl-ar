@@ -12,7 +12,7 @@
     "predev": "prisma generate",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "docker:build": "docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t masize/hodl-ar:latest --push ."
+    "docker:build": "docker buildx build --platform linux/amd64,linux/arm64 -t masize/hodl-ar:latest --push ."
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
