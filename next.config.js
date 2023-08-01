@@ -15,18 +15,18 @@ const nextConfig = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: "/.well-known/lnurlp/:path*",
-        destination: "/api/hodlar/lnurlp?username=:path*",
-      },
-      {
-        source: "/.well-known/nostr.json",
-        destination: "/api/hodlar/nostr",
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/.well-known/lnurlp/:path*",
+  //       destination: "/api/hodlar/lnurlp?username=:path*",
+  //     },
+  //     {
+  //       source: "/.well-known/nostr.json",
+  //       destination: "/api/hodlar/nostr",
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;
