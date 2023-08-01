@@ -1,13 +1,33 @@
-<a href="https://hodl.ar">
-  <img alt="HODL – Tu subdominio Bitcoiner" src="docs/images/top.png">
-  <h1 align="center">HODL.ar</h1>
-</a>
+# HODL.ar SDK
 
-<p align="center">
-  HODL.ar Frontend
-</p>
+Your Nostr and Lightning Provider. Just set up environment and start
 
-## Install
+## Features
+
+- NIP-05
+- LUD-16
+
+## Docker
+
+Pull the image from Docker Hub (masize/hodl-ar) _(Optional)_
+
+```bash
+docker pull masize/hodl-ar
+```
+
+Replace the environment variables and run the container
+
+```bash
+docker run -it -p 3000:3000 \
+-e MAIN_DOMAIN="hodl.ar" \
+-e MONGODB_URI="mongodb+srv://YOUR_MONGODB_URI" \
+-e LNBITS_ENDPOINT="https://wallet.lacrypta.ar" \
+-e LNBITS_ADMIN_KEY="YOUR_LNBITS_ADMIN_KEY" \
+-e LNBITS_ADMIN_USER="YOUR_LNBITS_ADMIN_USER" \
+masize/hodl-ar:latest
+```
+
+## Local Development
 
 ```bash
 nvm use

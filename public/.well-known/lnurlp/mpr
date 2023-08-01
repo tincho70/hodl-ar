@@ -1,8 +1,10 @@
 {
-  "tag": "payRequest",
-  "callback": "https://39ad255340.d.voltageapp.io/lnurlp/api/v1/lnurl/cb/WTQCHi",
-  "minSendable": 1000,
-  "maxSendable": 100000000000,
-  "metadata": "[[\"text/plain\", \"mpr\"]]",
-  "commentAllowed": 32
+    "tag": "payRequest",
+    "callback": "https://wallet.lacrypta.ar/lnurlp/api/v1/lnurl/cb/RQ6nct",
+    "minSendable": 1000,
+    "maxSendable": 100000000000,
+    "metadata": "[[\"text/plain\", \"Wallet de mpr@lacrypta.ar\"]]",
+    "commentAllowed": 32,
+    "allowsNostr": true,
+    "nostrPubkey": "38ab950c3e9c778f02cc6151129783435a2bb9c4a3c655180f392521f212c79b"
 }
