@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  web:
+    build:
+      context: ./
+      target: runner
+    command: node server.js
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      MAIN_DOMAIN: "hodl.ar"
+      MONGODB_URI: "mongodb+srv://YOUR_MONGODB_URI"
+      LNBITS_ENDPOINT: "https://wallet.lacrypta.ar"
+      LNBITS_ADMIN_KEY: "YOUR_LNBITS_ADMIN_KEY"
+      LNBITS_ADMIN_USER: "YOUR_LNBITS_ADMIN_USER"
