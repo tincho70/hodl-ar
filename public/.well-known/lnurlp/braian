@@ -2,8 +2,8 @@
   "status": "OK",
   "tag": "payRequest",
   "commentAllowed": 255,
-  "callback": "https://getalby.com/lnurlp/braian777/callback",
-  "metadata": "[[\"text/identifier\",\"braian777@getalby.com\"],[\"text/plain\",\"Sats for braian777\"]]",
+  "callback": "https://getalby.com/lnurlp/braian/callback",
+  "metadata": "[[\"text/identifier\",\"braian777@getalby.com\"],[\"text/plain\",\"Sats for braian\"]]",
   "minSendable": 1000,
   "maxSendable": 11000000000,
   "payerData": {
