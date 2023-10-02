@@ -1,0 +1,9 @@
+{
+  "tag": "payRequest",
+  "callback": "https://wallet.lacrypta.ar/lnurlp/api/v1/lnurl/cb/dRjLyz",
+  "minSendable": 1000,
+  "maxSendable": 100000000,
+  "metadata": "[[\"text/plain\", \"Fierillo LN address\"]]",
+  "allowsNostr": true,
+  "nostrPubkey": "aa71f94bf107be9ebc8b5b3b5e4b40e1340b2ed13fb121170e6d74291daf5c7e"
+}
