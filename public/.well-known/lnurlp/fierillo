@@ -1,9 +1,9 @@
 {
   "tag": "payRequest",
-  "callback": "https://wallet.lacrypta.ar/lnurlp/api/v1/lnurl/cb/dRjLyz",
+  "callback": "https://wallet.lacrypta.ar/lnurlp/api/v1/lnurl/cb/CmXqzy",
   "minSendable": 1000,
   "maxSendable": 100000000,
-  "metadata": "[[\"text/plain\", \"Fierillo LN address\"]]",
+  "metadata": "[[\"text/plain\", \"Fierillo's La crypta lightning address\"]]",
   "allowsNostr": true,
-  "nostrPubkey": "aa71f94bf107be9ebc8b5b3b5e4b40e1340b2ed13fb121170e6d74291daf5c7e"
+  "nostrPubkey": "7536d5bd0ac0c306036ff8ab2f4c267965359bd5f34f5d172d5432143244ed4c"
 }
