@@ -3,7 +3,7 @@
   "tag": "payRequest",
   "commentAllowed": 255,
   "callback": "https://getalby.com/lnurlp/tincho70/callback",
-  "metadata": "[[\"text/identifier\",\"tincho70@getalby.com\"],[\"text/plain\",\"Sats for Tincho\"]]",
+  "metadata": "[[\"text/identifier\",\"tincho@hodl.ar\"],[\"text/plain\",\"Sats for Tincho\"]]",
   "minSendable": 1000,
   "maxSendable": 11000000000,
   "payerData": {
