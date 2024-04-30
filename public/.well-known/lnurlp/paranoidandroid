@@ -3,7 +3,7 @@
 "tag":"payRequest",
 "commentAllowed":255,
 "callback":"https://getalby.com/lnurlp/paranoidandroid/callback",
-"metadata":"[[\"text/identifier\",\"paranoidandroid@getalby.com\"],[\"text/plain\",\"Sats for paranoidandroid\"]]",
+"metadata":"[[\"text/identifier\",\"paranoidandroid@hodl.ar\"],[\"text/plain\",\"Sats for paranoidandroid\"]]",
 "minSendable":1000,
 "maxSendable":500000000,
 "payerData":{
