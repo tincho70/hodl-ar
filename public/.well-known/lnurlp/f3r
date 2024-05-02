@@ -9,7 +9,7 @@
   "payerData":{"name":{"mandatory":false},
   "email":{"mandatory":false},
   "pubkey":{"mandatory":false}},
-  "nostrPubkey":"141724cbca966a14dbacf33e74ccf4e8b6f05bf293cb4cc7f9c77add3ab573e2",
+  "nostrPubkey":"e17feb5f2cf83546bcf7fd9c8237b05275be958bd521543c2285ffc6c2d654b3",
   "allowsNostr":true,
   "federationId":"lawallet.ar",
   "accountPubKey":"0422409babc35ea01492aa5c18de29ade51e1708fb862db066e93881453026ba"
